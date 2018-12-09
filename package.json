@@ -1,0 +1,45 @@
+{
+  "name": "lib-boilerplate",
+  "version": "0.0.0",
+  "description": "Some awesome description",
+  "main": "dist/lib-boilerplate.js",
+  "author": {
+    "name": "Eduardo San Martin Morote",
+    "email": "posva13@gmail.com"
+  },
+  "scripts": {
+    "lint": "eslint --fix --color --ext=js,html src tests *.js",
+    "lint:fix": "npm run lint -- --fix",
+    "unit": "jest",
+    "dev": "npm run unit -- --watchAll",
+    "test": "npm run lint && npm run unit",
+    "prepublishOnly": "rollit"
+  },
+  "files": [
+    "src",
+    "dist",
+    "types/*.d.ts",
+    "LICENSE",
+    "README.md"
+  ],
+  "keywords": [],
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/core": "^7.2.0",
+    "@babel/preset-env": "^7.2.0",
+    "babel-core": "7.0.0-bridge.0",
+    "babel-jest": "^23.6.0",
+    "codecov": "^3.1.0",
+    "eslint": "^5.10.0",
+    "eslint-config-posva": "^2.0.3",
+    "jest": "^23.6.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/posva/lib-boilerplate.git"
+  },
+  "bugs": {
+    "url": "https://github.com/posva/lib-boilerplate/issues"
+  },
+  "homepage": "https://github.com/posva/lib-boilerplate#readme"
+}
