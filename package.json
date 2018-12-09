@@ -1,8 +1,8 @@
 {
-  "name": "lib-boilerplate",
+  "name": "vue-local-scope",
   "version": "0.0.0",
   "description": "Some awesome description",
-  "main": "dist/lib-boilerplate.js",
+  "main": "dist/vue-local-scope.js",
   "author": {
     "name": "Eduardo San Martin Morote",
     "email": "posva13@gmail.com"
@@ -36,10 +36,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/posva/lib-boilerplate.git"
+    "url": "git+https://github.com/posva/vue-local-scope.git"
   },
   "bugs": {
-    "url": "https://github.com/posva/lib-boilerplate/issues"
+    "url": "https://github.com/posva/vue-local-scope/issues"
   },
-  "homepage": "https://github.com/posva/lib-boilerplate#readme"
+  "homepage": "https://github.com/posva/vue-local-scope#readme"
 }
