@@ -15,6 +15,8 @@
     "test": "npm run lint && npm run unit",
     "prepublishOnly": "rollit"
   },
+  "sideEffects": false,
+  "types": "types/index.d.ts",
   "files": [
     "src",
     "dist",
@@ -27,12 +29,15 @@
   "devDependencies": {
     "@babel/core": "^7.2.0",
     "@babel/preset-env": "^7.2.0",
+    "@vue/test-utils": "^1.0.0-beta.26",
     "babel-core": "7.0.0-bridge.0",
     "babel-jest": "^23.6.0",
     "codecov": "^3.1.0",
     "eslint": "^5.10.0",
     "eslint-config-posva": "^2.0.3",
-    "jest": "^23.6.0"
+    "jest": "^23.6.0",
+    "vue": "^2.5.18",
+    "vue-template-compiler": "^2.5.18"
   },
   "repository": {
     "type": "git",
