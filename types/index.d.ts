@@ -6,7 +6,7 @@ import { PropOptions } from 'vue'
  */
 export declare function createLocalScope<Computed, Props = { [K in keyof Computed]: PropOptions }>(
   computed: Computed,
-  propsOptions: Props
+  propsOptions?: Props
 ): {
   props: Props
 }

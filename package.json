@@ -2,17 +2,22 @@
   "name": "vue-local-scope",
   "version": "0.0.0",
   "description": "Some awesome description",
-  "main": "dist/vue-local-scope.js",
+  "main": "dist/vue-local-scope.cjs.js",
+  "module": "dist/vue-local-scope.es.js",
+  "unpkg": "dist/vue-local-scope.js",
+  "browser": "dist/vue-local-scope.es.js",
   "author": {
     "name": "Eduardo San Martin Morote",
     "email": "posva13@gmail.com"
   },
   "scripts": {
     "lint": "eslint --fix --color --ext=js,html src tests *.js",
+    "pretest": "npm run lint",
     "lint:fix": "npm run lint -- --fix",
     "unit": "jest",
+    "types": "tsc -p ./types/test/tsconfig.json",
     "dev": "npm run unit -- --watchAll",
-    "test": "npm run lint && npm run unit",
+    "test": "npm run types && npm run unit",
     "prepublishOnly": "rollit"
   },
   "sideEffects": false,
@@ -24,7 +29,16 @@
     "LICENSE",
     "README.md"
   ],
-  "keywords": [],
+  "keywords": [
+    "vue",
+    "local",
+    "scope",
+    "slot",
+    "slot-scope",
+    "computed",
+    "template",
+    "variables"
+  ],
   "license": "MIT",
   "devDependencies": {
     "@babel/core": "^7.2.0",
@@ -36,6 +50,7 @@
     "eslint": "^5.10.0",
     "eslint-config-posva": "^2.0.3",
     "jest": "^23.6.0",
+    "typescript": "^3.2.2",
     "vue": "^2.5.18",
     "vue-template-compiler": "^2.5.18"
   },

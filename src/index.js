@@ -1,7 +1,6 @@
 export const LocalScope = {
   functional: true,
   render: (h, { data: { scopedSlots }, props }) => {
-    console.log('rendered functional')
     return scopedSlots.default(props)
   },
 }
