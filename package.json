@@ -1,6 +1,6 @@
 {
   "name": "vue-local-scope",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Some awesome description",
   "main": "dist/vue-local-scope.cjs.js",
   "module": "dist/vue-local-scope.es.js",
