@@ -6,17 +6,20 @@ describe('LocalScope', () => {
     const LocalScope = createLocalScope({
       foo: ({ foo, bar }) => foo.toUpperCase(),
       bar: ({ bar }) => bar,
+      items: false,
+      joined: ({ items }) => items.join(','),
     })
     const wrapper = shallowMount(LocalScope, {
       propsData: {
         foo: 'foo',
         bar: 'bar',
+        items: ['one', 'two'],
       },
       scopedSlots: {
-        default: '<div>{{ props.foo }} {{ props.bar }}</div>',
+        default: '<div>{{ props.foo }} {{ props.bar }}; {{ props.joined }}</div>',
       },
     })
 
-    expect(wrapper.text()).toBe('FOO bar')
+    expect(wrapper.text()).toBe('FOO bar; one,two')
   })
 })

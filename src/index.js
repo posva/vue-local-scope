@@ -6,21 +6,25 @@ export const LocalScope = {
 }
 
 export function createLocalScope (computed, propOptions = {}) {
-  const keys = Object.keys(computed)
-  const props = keys.reduce((props, key) => {
-    props[key] = propOptions[key] || { required: true }
+  const propsKeys = Object.keys(computed)
+  // remove values that are prop only
+  const computedKeys = Object.keys(computed).filter(k => computed[k])
+  const props = propsKeys.reduce((props, key) => {
+    // mark the prop as required by default if it's false as it doesn't generate
+    // a computed property
+    props[key] = propOptions[key] || { required: !computed[key] }
     return props
   }, {})
 
   return {
     props,
-    computed: keys.reduce((transformedComputed, key) => {
+    computed: computedKeys.reduce((transformedComputed, key) => {
       transformedComputed[key + '_'] = computed[key]
       return transformedComputed
     }, {}),
     render (h) {
       return this.$scopedSlots.default(
-        keys.reduce((o, key) => {
+        computedKeys.reduce((o, key) => {
           o[key] = this[key + '_']
           return o
         }, {})
