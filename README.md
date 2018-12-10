@@ -23,16 +23,17 @@ LocalScope doesn't render any element by itself, it renders whatever is passed a
 <template>
   <div>
     <DataProvider>
-    <template slot-scope="items">
-      <LocalScope :names="items.map(i => i.name)" :ids="items.map(i => i.id)">
-        <template slot-scope="{ names, ids }">
-          <!-- we are able to use the mapped names three times but we only run map once -->
-          <DisplayNames :names="names" @handle-change="updateNames(ids, names)" />
-          <p>{{ names }}</p>
-          <p>{{ ids }}</p>
-        </template>
-      </LocalScope>
-    </template>
+      <template slot-scope="items">
+        <LocalScope :names="items.map(i => i.name)" :ids="items.map(i => i.id)">
+          <template slot-scope="{ names, ids }">
+            <!-- we are able to use the mapped names three times but we only run map once -->
+            <DisplayNames :names="names" @handle-change="updateNames(ids, names)" />
+            <p>{{ names }}</p>
+            <p>{{ ids }}</p>
+          </template>
+        </LocalScope>
+      </template>
+    </DataProvider>
   </div>
 </template>
 
@@ -56,16 +57,17 @@ Because `LocalScope` is a functional component, you can return any amount of ele
 <template>
   <div>
     <DataProvider>
-    <template slot-scope="{ items, others }">
-      <NamesAndIdsScope :items="items" :others="others">
-        <div slot-scope="{ names, ids, others }">
-          <DisplayNames :names="names" @handle-change="updateNames(ids, names)" />
-          <p>{{ names }}</p>
-          <p>{{ ids }}</p>
-          <p>{{ others }}</p>
-        </div>
-      </NamesAndIdsScope>
-    </template>
+      <template slot-scope="{ items, others }">
+        <NamesAndIdsScope :items="items" :others="others">
+          <div slot-scope="{ names, ids, others }">
+            <DisplayNames :names="names" @handle-change="updateNames(ids, names)" />
+            <p>{{ names }}</p>
+            <p>{{ ids }}</p>
+            <p>{{ others }}</p>
+          </div>
+        </NamesAndIdsScope>
+      </template>
+    </DataProvider>
   </div>
 </template>
 
