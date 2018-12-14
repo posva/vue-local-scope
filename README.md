@@ -8,6 +8,32 @@
 npm install vue-local-scope
 ```
 
+## Why?
+
+When using [scoped slots](https://vuejs.org/v2/guide/components-slots.html#Scoped-Slots) you often get access to data only in the template. But sometimes, you still need to apply transformation to that data, like calling a `map` on an array or a `filter`. Here is an example using [Vue Promised](https://github.com/posva/vue-promised) to fetch information from an API endpoint:
+
+```vue
+<template>
+  <Promised :promise="usersPromise">
+    <div slot-scope="users">
+      <Autocomplete v-model="selectedUsers" :items="users.map(user => ({ value: user.id, label: user.name })) /">
+      <SelectedUsers :users="selectedUsers.map(user => users.find(u => u.id === user.value))" />
+    </div>
+  </Promised>
+</template>
+```
+
+This approach has multiple issues:
+
+- The `map` functions are called everytime the component renders even if the array `users` didn't change
+- If you need the mapped version of `users` in multiple places you will duplicate the code and calls of `map`
+- There is too much code written in the template, it should definitely go in the `script` section
+
+Vue Local Scope offers two ways of creating local variables:
+
+- [LocalScope](#LocalScope): a functional component that doesn't generate DOM nodes, allows you to not duplicate your code but still present the first and third problem
+- [createLocalScope](#createLocalScope): a function that generates a component to hold computed properties and provide them in a scoped slot. But less convenient than LocalScope
+
 ## Usage
 
 Vue Local Scope exports two things:
@@ -42,7 +68,7 @@ import { LocalScope } from 'vue-local-scope'
 
 export default {
   // other options
-  components: { LocalScope }
+  components: { LocalScope },
 }
 </script>
 ```
@@ -81,12 +107,12 @@ const NamesAndIdsScope = createLocalScope({
   items: false,
   // we can also override a value directly
   // others is a prop and will appear in the `slot-scope` as `others`
-  others: ({ others }) => others.filter(o => !o.skip)
+  others: ({ others }) => others.filter(o => !o.skip),
 })
 
 export default {
   // other options
-  components: { NamesAndIdsScope }
+  components: { NamesAndIdsScope },
 }
 </script>
 ```
