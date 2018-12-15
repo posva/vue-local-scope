@@ -29,10 +29,7 @@ This approach has multiple issues:
 - If you need the mapped version of `users` in multiple places you will duplicate the code and calls of `map`
 - There is too much code written in the template, it should definitely go in the `script` section
 
-Vue Local Scope offers two ways of creating local variables:
-
-- [LocalScope](#LocalScope): a functional component that doesn't generate DOM nodes, allows you to not duplicate your code but still present the first and third problem
-- [createLocalScope](#createLocalScope): a function that generates a component to hold computed properties and provide them in a scoped slot. But less convenient than LocalScope
+Vue Local Scope solve these problems with components and scoped slots.
 
 ## Usage
 
@@ -43,7 +40,7 @@ Vue Local Scope exports two things:
 
 ### LocalScope
 
-LocalScope doesn't render any element by itself, it renders whatever is passed as a scoped slot. You can pass any prop to it, usually applying some kind of transformation, like a `map` or a `reduce`, **that transformation is only applied once everytime the template renders**, and it allows you to have a **local variable** based on anything that exists in the template. This is useful for data coming from a `slot-scope`:
+LocalScope doesn't generate any DOM node by itself, it renders whatever is passed as a scoped slot. It allows you to not duplicate your code but still present the first and third problem discussed in the [Why](#Why) section. You can pass any prop to it, usually applying some kind of transformation, like a `map` or a `reduce`, **that transformation is only applied once everytime the template renders**, and it allows you to have a **local variable** based on anything that exists in the template. This is useful for data coming from a `slot-scope`:
 
 ```vue
 <template>
@@ -77,7 +74,7 @@ Because `LocalScope` is a functional component, you can return any amount of ele
 
 ### `createLocalScope`
 
-`createLocalScope` generates a stateful component and requires you to provide an object that maps props to new values. The generated component will use computed properties **to benefit from ther caching strategy** and give you back the data in a `scoped-slot`.
+`createLocalScope` is a function that generates a component to hold computed properties and provide them in a scoped slot. It is less convenient than LocalScope but because it generates a stateful component **it benefits from caching in computed properties**. It also exposes the data through a scoped slot:
 
 ```vue
 <template>
