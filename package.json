@@ -45,11 +45,11 @@
     "@babel/preset-env": "^7.2.0",
     "@vue/test-utils": "^1.0.0-beta.26",
     "babel-core": "7.0.0-bridge.0",
-    "babel-jest": "^23.6.0",
+    "babel-jest": "^24.7.1",
     "codecov": "^3.1.0",
     "eslint": "^5.10.0",
     "eslint-config-posva": "^2.0.3",
-    "jest": "^23.6.0",
+    "jest": "^24.7.1",
     "typescript": "^3.2.2",
     "vue": "^2.5.18",
     "vue-template-compiler": "^2.5.18"
