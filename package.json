@@ -48,7 +48,7 @@
     "babel-jest": "^24.7.1",
     "codecov": "^3.1.0",
     "eslint": "^6.0.1",
-    "eslint-config-posva": "^2.0.3",
+    "eslint-config-posva": "^3.0.1",
     "jest": "^24.7.1",
     "typescript": "^3.2.2",
     "vue": "^2.5.18",
