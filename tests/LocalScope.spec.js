@@ -1,5 +1,5 @@
 import { LocalScope } from '../src'
-import { shallowMount } from '@vue/test-utils'
+import { shallowMount, mount } from '@vue/test-utils'
 
 describe('LocalScope', () => {
   it('works', () => {
@@ -14,6 +14,18 @@ describe('LocalScope', () => {
       scopedSlots: {
         default: '<div>{{ props.foo }} {{ props.bar }}</div>',
       },
+    })
+
+    expect(wrapper.text()).toBe('foo bar')
+  })
+
+  it('works with v-slot', () => {
+    const wrapper = mount({
+      template: `<LocalScope foo="foo" bar="bar" v-slot="{ foo, bar }">
+        <div>{{ foo }} {{ bar }}</div>
+      </LocalScope>`,
+    }, {
+      components: { LocalScope },
     })
 
     expect(wrapper.text()).toBe('foo bar')
