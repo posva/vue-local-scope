@@ -47,13 +47,15 @@ LocalScope doesn't generate any DOM node by itself, it renders whatever is passe
   <div>
     <DataProvider>
       <template slot-scope="items">
-        <LocalScope :names="items.map(i => i.name)" :ids="items.map(i => i.id)">
-          <template slot-scope="{ names, ids }">
-            <!-- we are able to use the mapped names three times but we only run map once -->
-            <DisplayNames :names="names" @handle-change="updateNames(ids, names)" />
-            <p>{{ names }}</p>
-            <p>{{ ids }}</p>
-          </template>
+        <LocalScope
+          :names="items.map(i => i.name)"
+          :ids="items.map(i => i.id)"
+          v-slot="{ names, ids }"
+        >
+          <!-- we are able to use the mapped names three times but we only run map once -->
+          <DisplayNames :names="names" @handle-change="updateNames(ids, names)" />
+          <p>{{ names }}</p>
+          <p>{{ ids }}</p>
         </LocalScope>
       </template>
     </DataProvider>
@@ -81,13 +83,11 @@ Because `LocalScope` is a functional component, you can return any amount of ele
   <div>
     <DataProvider>
       <template slot-scope="{ items, others }">
-        <NamesAndIdsScope :items="items" :others="others">
-          <div slot-scope="{ names, ids, others }">
-            <DisplayNames :names="names" @handle-change="updateNames(ids, names)" />
-            <p>{{ names }}</p>
-            <p>{{ ids }}</p>
-            <p>{{ others }}</p>
-          </div>
+        <NamesAndIdsScope :items="items" :others="others" v-slot="{ name, ids, others }">
+          <DisplayNames :names="names" @handle-change="updateNames(ids, names)" />
+          <p>{{ names }}</p>
+          <p>{{ ids }}</p>
+          <p>{{ others }}</p>
         </NamesAndIdsScope>
       </template>
     </DataProvider>
