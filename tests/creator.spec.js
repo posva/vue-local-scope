@@ -32,9 +32,10 @@ describe('createLocalScope', () => {
     })
 
     const wrapper = mount({
-      template: `<LocalScope foo="foo" bar="bar" :items="['one', 'two']" v-slot="{ foo, bar, joined }">
+      template: `<LocalScope :foo="foo" :bar="bar" :items="['one', 'two']" v-slot="{ foo, bar, joined }">
         <div>{{ foo }} {{ bar }}; {{ joined }}</div>
       </LocalScope>`,
+      data: () => ({ foo: 'foo', bar: 'bar' }),
     }, {
       components: { LocalScope },
     })

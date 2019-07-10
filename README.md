@@ -83,6 +83,7 @@ Because `LocalScope` is a functional component, you can return any amount of ele
   <div>
     <DataProvider>
       <template slot-scope="{ items, others }">
+        <!-- Here we are intentionally using the same variable name `others` to shadow the variable inside NamesAndIdsScope -->
         <NamesAndIdsScope :items="items" :others="others" v-slot="{ name, ids, others }">
           <DisplayNames :names="names" @handle-change="updateNames(ids, names)" />
           <p>{{ names }}</p>
