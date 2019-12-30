@@ -14,8 +14,8 @@ When using [scoped slots](https://vuejs.org/v2/guide/components-slots.html#Scope
 
 ```vue
 <template>
-  <Promised :promise="usersPromise">
-    <div slot-scope="users">
+  <Promised :promise="usersPromise" v-slot="users">
+    <div>
       <Autocomplete v-model="selectedUsers" :items="users.map(user => ({ value: user.id, label: user.name })) /">
       <SelectedUsers :users="selectedUsers.map(user => users.find(u => u.id === user.value))" />
     </div>
@@ -40,24 +40,22 @@ Vue Local Scope exports two things:
 
 ### LocalScope
 
-LocalScope doesn't generate any DOM node by itself, it renders whatever is passed as a scoped slot. It allows you to not duplicate your code but still present the first and third problem discussed in the [Why](#Why) section. You can pass any prop to it, usually applying some kind of transformation, like a `map` or a `reduce`, **that transformation is only applied once everytime the template renders**, and it allows you to have a **local variable** based on anything that exists in the template. This is useful for data coming from a `slot-scope`:
+LocalScope doesn't generate any DOM node by itself, it renders whatever is passed as a scoped slot. It allows you to not duplicate your code but still present the first and third problem discussed in the [Why](#Why) section. You can pass any prop to it, usually applying some kind of transformation, like a `map` or a `reduce`, **that transformation is only applied once everytime the template renders**, and it allows you to have a **local variable** based on anything that exists in the template. This is useful for data coming from a `v-slot`:
 
 ```vue
 <template>
   <div>
-    <DataProvider>
-      <template slot-scope="items">
-        <LocalScope
-          :names="items.map(i => i.name)"
-          :ids="items.map(i => i.id)"
-          v-slot="{ names, ids }"
-        >
-          <!-- we are able to use the mapped names three times but we only run map once -->
-          <DisplayNames :names="names" @handle-change="updateNames(ids, names)" />
-          <p>{{ names }}</p>
-          <p>{{ ids }}</p>
-        </LocalScope>
-      </template>
+    <DataProvider v-slot="items">
+      <LocalScope
+        :names="items.map(i => i.name)"
+        :ids="items.map(i => i.id)"
+        v-slot="{ names, ids }"
+      >
+        <!-- we are able to use the mapped names three times but we only run map once -->
+        <DisplayNames :names="names" @handle-change="updateNames(ids, names)" />
+        <p>{{ names }}</p>
+        <p>{{ ids }}</p>
+      </LocalScope>
     </DataProvider>
   </div>
 </template>
@@ -81,16 +79,14 @@ Because `LocalScope` is a functional component, you can return any amount of ele
 ```vue
 <template>
   <div>
-    <DataProvider>
-      <template slot-scope="{ items, others }">
-        <!-- Here we are intentionally using the same variable name `others` to shadow the variable inside NamesAndIdsScope -->
-        <NamesAndIdsScope :items="items" :others="others" v-slot="{ name, ids, others }">
-          <DisplayNames :names="names" @handle-change="updateNames(ids, names)" />
-          <p>{{ names }}</p>
-          <p>{{ ids }}</p>
-          <p>{{ others }}</p>
-        </NamesAndIdsScope>
-      </template>
+    <!-- Here we are intentionally using the same variable name `others` to shadow the variable inside NamesAndIdsScope -->
+    <DataProvider v-slot="{ items, others }">
+      <NamesAndIdsScope :items="items" :others="others" v-slot="{ name, ids, others }">
+        <DisplayNames :names="names" @handle-change="updateNames(ids, names)" />
+        <p>{{ names }}</p>
+        <p>{{ ids }}</p>
+        <p>{{ others }}</p>
+      </NamesAndIdsScope>
     </DataProvider>
   </div>
 </template>
@@ -104,7 +100,7 @@ const NamesAndIdsScope = createLocalScope({
   // we don't need to transform items but we need it as a prop
   items: false,
   // we can also override a value directly
-  // others is a prop and will appear in the `slot-scope` as `others`
+  // others is a prop and will appear in the `v-slot` variable as `others`
   others: ({ others }) => others.filter(o => !o.skip),
 })
 
@@ -115,7 +111,7 @@ export default {
 </script>
 ```
 
-In this case we do get the benefit from computed properties caching but we need to provide a root element (the `div` with the `slot-scope`)
+In this case we do get the benefit from computed properties caching but `NamesAndIdsScope` creates a root element to group the content under it.
 
 ## API
 
